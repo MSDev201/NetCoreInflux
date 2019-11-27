@@ -4,7 +4,7 @@ using System.Text;
 
 namespace InfluxNetCore
 {
-    public class InfluxClient : IInfluxClient
+    public interface IInfluxClient
     {
     }
 }
