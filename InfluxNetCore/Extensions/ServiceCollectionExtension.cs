@@ -9,7 +9,7 @@ namespace InfluxNetCore.Extensions
     public static class ServiceCollectionExtension
     {
 
-        public static void AddInfluxClient(this IServiceCollection service, string host = "localhost", ushort port = 8086, string username = null, string password = null)
+        public static void AddInfluxClient(this IServiceCollection service, string host = "localhost", ushort port = 8086, string username = null, string password = null, string defaultDb = null)
         {
             // register connection
             var connection = new InfluxConnection
@@ -17,7 +17,8 @@ namespace InfluxNetCore.Extensions
                 Host = host,
                 Port = port,
                 Username = username,
-                Password = password
+                Password = password,
+                DefaultDatabase = defaultDb
             };
 
             InfluxClient.Connection = connection;
@@ -38,7 +39,7 @@ namespace InfluxNetCore.Extensions
             var sectionChilds = section.GetChildren();
             string host = null;
             ushort port = 0;
-            string username = null, password = null;
+            string username = null, password = null, defaultDb = null;
             foreach(var sectionChild in sectionChilds)
             {
                 switch (sectionChild.Key.ToLower())
@@ -55,13 +56,16 @@ namespace InfluxNetCore.Extensions
                     case "password":
                         password = sectionChild.Value;
                         break;
+                    case "database":
+                        defaultDb = sectionChild.Value;
+                        break;
                     default:
                         break;
                 }
 
             }
 
-            AddInfluxClient(services, host, port, username, password);
+            AddInfluxClient(services, host, port, username, password, defaultDb);
         }
 
     }
