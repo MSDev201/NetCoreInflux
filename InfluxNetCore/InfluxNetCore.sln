@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfluxNetCore", "InfluxNetCore.csproj", "{0D1A493C-59C5-4386-93D5-D87B4346C3FD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestInfluxClient", "..\TestInfluxClient\TestInfluxClient.csproj", "{D25594C7-4DC2-4708-89CF-69C39ED2D7C5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0D1A493C-59C5-4386-93D5-D87B4346C3FD} = {0D1A493C-59C5-4386-93D5-D87B4346C3FD}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
