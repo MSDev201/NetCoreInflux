@@ -12,7 +12,7 @@ namespace InfluxNetCore.Clients
 
         public static async Task MakeWriteRequest(
             string measurement,
-            object fields = null,
+            object fields,
             object tags = null,
             string timestamp = null,
             string precision = null,
@@ -22,7 +22,9 @@ namespace InfluxNetCore.Clients
                 return;
 
             if (db == null)
-                db = "test";
+                db = InfluxClient.Connection.DefaultDatabase;
+            if (db == null)
+                return;
 
             if (timestamp == null)
                 timestamp = DateTime.UtcNow.GetUnixTimestampNanoseconds().ToString();
@@ -55,7 +57,7 @@ namespace InfluxNetCore.Clients
                 tagsString = tagsString + " ";
             }
 
-            var test = await InfluxRequest.MakePostAsync("write", measurement + tagsString + fieldsString + " " + timestamp, extraParams.ToArray());
+            await InfluxRequest.MakePostAsync("write", measurement + tagsString + fieldsString + " " + timestamp, extraParams.ToArray());
         }
 
         private static string MakeWriteStringFromDict(Dictionary<string, object> input)

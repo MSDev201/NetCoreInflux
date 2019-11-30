@@ -1,4 +1,5 @@
 ﻿using InfluxNetCore.Clients;
+using InfluxNetCore.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -33,6 +34,21 @@ namespace InfluxNetCore
             }).Start();
 
             
+        }
+
+        public async Task WritePoint(
+            string measurement,
+            object fields,
+            object tags = null,
+            DateTime? time = null,
+            string precision = null,
+            string db = null)
+        {
+            string timestamp = null;
+            if (time.HasValue)
+                timestamp = time.Value.GetUnixTimestampNanoseconds().ToString();
+
+            await WriteClient.MakeWriteRequest(measurement, fields, tags, timestamp, precision, db);
         }
     }
 }
